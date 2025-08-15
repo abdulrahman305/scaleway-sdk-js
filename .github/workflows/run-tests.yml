@@ -12,29 +12,28 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: pnpm/action-setup@v4.0.0
+      - uses: pnpm/action-setup@v4.1.0
       - name: Use Node.js
-        uses: actions/setup-node@v4.1.0
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: 20
           check-latest: true
-          cache: "pnpm"
-      - run: pnpm install
-      - run: pnpm run build
-      - run: pnpm tsc --noEmit
+          cache: 'pnpm'
+      - run: make install-dependencies
+      - run: make typing
   lint:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: pnpm/action-setup@v4.0.0
+      - uses: pnpm/action-setup@v4.1.0
       - name: Use Node.js
-        uses: actions/setup-node@v4.1.0
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: 20
           check-latest: true
-          cache: "pnpm"
-      - run: pnpm install
-      - run: pnpm run build
+          cache: 'pnpm'
+      - run: make install-dependencies
+      - run: make build
       - run: pnpm run lint
   test:
     runs-on: ubuntu-24.04
@@ -44,18 +43,19 @@ jobs:
           - node
           - jsdom
         node:
-          - "18"
-          - "20"
+          - '20'
+          - '22'
+          - '24'
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: pnpm/action-setup@v4.0.0
+      - uses: pnpm/action-setup@v4.1.0
       - name: Use Node.js
-        uses: actions/setup-node@v4.1.0
+        uses: actions/setup-node@v4.4.0
         with:
           node-version: ${{ matrix.node }}
           check-latest: true
-          cache: "pnpm"
-      - run: pnpm install
-      - run: pnpm run build
+          cache: 'pnpm'
+      - run: make install-dependencies
+      - run: make build
       - run: pnpm run test:coverage --environment ${{ matrix.test-environment }}
-      - uses: codecov/codecov-action@v4.6.0
+      - uses: codecov/codecov-action@v5.4.3

@@ -1,16 +1,13 @@
 {
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*", "packages_generated/*"],
   "npmClient": "pnpm",
   "version": "independent",
   "command": {
-    "publish": {
-      "conventionalCommits": true,
-      "changelogPreset": "conventionalcommits"
-    },
     "version": {
-      "message": "chore(release): publish"
+      "conventionalCommits": true,
+      "message": "chore(release): publish",
+      "createRelease": "github",
+      "loglevel": "verbose"
     }
   },
   "$schema": "node_modules/lerna/schemas/lerna-schema.json"

@@ -1,7 +1,8 @@
 import browserslist from 'browserslist'
 import { resolveToEsbuildTarget } from 'esbuild-plugin-browserslist'
 import { readPackage } from 'read-pkg'
-import { defineConfig, type UserConfig } from 'vite'
+import type { UserConfig } from 'vite'
+import { defineConfig } from 'vite'
 
 const pkg = await readPackage()
 
@@ -14,7 +15,7 @@ const externalPkgs = [
 const external = (id: string) => {
   const match = (dependency: string) => new RegExp(`^${dependency}`).test(id)
   const isExternal = externalPkgs.some(match)
-  const isBundled = pkg.bundleDependencies?.some(match) // alias of bundledDependencies package.json field array
+  const isBundled = pkg.bundleDependencies?.some(match) // alias of bundleDependencies package.json field array
 
   return isExternal && !isBundled
 }
@@ -28,12 +29,13 @@ const targets = resolveToEsbuildTarget(
   },
 )
 
-const defaultConfig: UserConfig = {
+export const defaultConfig: UserConfig = defineConfig({
   build: {
     outDir: 'dist',
     target: [...targets, 'node20'],
     minify: false,
     ssr: true,
+    emptyOutDir: true,
     lib: {
       name: pkg.name,
       entry: 'src/index.ts',
@@ -54,21 +56,6 @@ const defaultConfig: UserConfig = {
       },
     },
   },
-  test: {
-    coverage: {
-      enabled: true,
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      exclude: [
-        '.reports/**',
-        '**/.eslintrc.json.*',
-        'dist',
-        '**/examples/**',
-        '**/packages/clients/src/api/*',
-        '**/*.d.ts',
-      ],
-    },
-  },
-}
+})
 
-export default defineConfig(defaultConfig)
+export default defaultConfig
