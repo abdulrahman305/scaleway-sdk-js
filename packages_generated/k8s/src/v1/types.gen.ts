@@ -20,6 +20,7 @@ export type CNI =
   | 'flannel'
   | 'kilo'
   | 'none'
+  | 'cilium_native'
 
 export type ClusterStatus =
   | 'unknown'
@@ -1526,6 +1527,7 @@ export interface NodeMetadata {
   nodeTaints: NodeMetadataCoreV1Taint[]
   providerId: string
   resolvconfPath: string
+  templateArgs: Record<string, string>
   hasGpu: boolean
   externalIp: string
   repoUri: string

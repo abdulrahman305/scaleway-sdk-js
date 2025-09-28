@@ -1,6 +1,36 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
 import type { Region as ScwRegion } from '@scaleway/sdk-client'
+import type { CountryCode as StdCountryCode } from '@scaleway/sdk-std'
+
+export type AuthenticationEventFailureReason =
+  | 'unknown_failure_reason'
+  | 'invalid_mfa'
+  | 'invalid_password'
+
+export type AuthenticationEventMFAType = 'unknown_mfa_type' | 'totp'
+
+export type AuthenticationEventMethod =
+  | 'unknown_method'
+  | 'password'
+  | 'authentication_code'
+  | 'oauth2'
+  | 'saml'
+
+export type AuthenticationEventOrigin =
+  | 'unknown_origin'
+  | 'public_api'
+  | 'admin_api'
+
+export type AuthenticationEventResult = 'unknown_result' | 'success' | 'failure'
+
+export type ListAuthenticationEventsRequestOrderBy =
+  | 'recorded_at_desc'
+  | 'recorded_at_asc'
+
+export type ListCombinedEventsRequestOrderBy =
+  | 'recorded_at_desc'
+  | 'recorded_at_asc'
 
 export type ListEventsRequestOrderBy = 'recorded_at_desc' | 'recorded_at_asc'
 
@@ -20,6 +50,8 @@ export type ResourceType =
   | 'iam_api_key'
   | 'iam_ssh_key'
   | 'iam_rule'
+  | 'iam_saml'
+  | 'iam_saml_certificate'
   | 'secret_manager_secret'
   | 'secret_manager_version'
   | 'key_manager_key'
@@ -27,9 +59,28 @@ export type ResourceType =
   | 'account_organization'
   | 'account_project'
   | 'instance_server'
+  | 'instance_placement_group'
+  | 'instance_security_group'
+  | 'instance_volume'
+  | 'instance_snapshot'
+  | 'instance_image'
   | 'apple_silicon_server'
   | 'baremetal_server'
   | 'baremetal_setting'
+  | 'ipam_ip'
+  | 'sbs_volume'
+  | 'sbs_snapshot'
+  | 'load_balancer_lb'
+  | 'load_balancer_ip'
+  | 'load_balancer_frontend'
+  | 'load_balancer_backend'
+  | 'load_balancer_route'
+  | 'load_balancer_acl'
+  | 'load_balancer_certificate'
+  | 'sfs_filesystem'
+  | 'vpc_private_network'
+
+export type SystemEventKind = 'unknown_kind' | 'cron' | 'notification'
 
 export interface AccountOrganizationInfo {}
 
@@ -60,6 +111,10 @@ export interface InstanceServerInfo {
   name: string
 }
 
+export interface IpamIpInfo {
+  address: string
+}
+
 export interface KeyManagerKeyInfo {}
 
 export interface KubernetesACLInfo {}
@@ -76,6 +131,39 @@ export interface KubernetesPoolInfo {
   name: string
 }
 
+export interface LoadBalancerAclInfo {
+  frontendId: string
+}
+
+export interface LoadBalancerBackendInfo {
+  lbId: string
+  name: string
+}
+
+export interface LoadBalancerCertificateInfo {
+  lbId: string
+  name: string
+}
+
+export interface LoadBalancerFrontendInfo {
+  lbId: string
+  name: string
+}
+
+export interface LoadBalancerIpInfo {
+  ipAddress: string
+  lbId?: string
+}
+
+export interface LoadBalancerLbInfo {
+  name: string
+}
+
+export interface LoadBalancerRouteInfo {
+  frontendId: string
+  backendId: string
+}
+
 export interface SecretManagerSecretInfo {
   path: string
   keyId?: string
@@ -83,14 +171,6 @@ export interface SecretManagerSecretInfo {
 
 export interface SecretManagerSecretVersionInfo {
   revision: number
-}
-
-export interface EventPrincipal {
-  id: string
-}
-
-export interface EventSystem {
-  name: string
 }
 
 export interface Resource {
@@ -103,96 +183,187 @@ export interface Resource {
   /**
    * @deprecated
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   secmSecretInfo?: SecretManagerSecretInfo
   /**
    * @deprecated
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   secmSecretVersionInfo?: SecretManagerSecretVersionInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   kubeClusterInfo?: KubernetesClusterInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   kubePoolInfo?: KubernetesPoolInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   kubeNodeInfo?: KubernetesNodeInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   kubeAclInfo?: KubernetesACLInfo
   /**
    * @deprecated
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   keymKeyInfo?: KeyManagerKeyInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   secretManagerSecretInfo?: SecretManagerSecretInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   secretManagerVersionInfo?: SecretManagerSecretVersionInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   keyManagerKeyInfo?: KeyManagerKeyInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   accountUserInfo?: AccountUserInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   accountOrganizationInfo?: AccountOrganizationInfo
   /**
+   * @deprecated
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   instanceServerInfo?: InstanceServerInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   appleSiliconServerInfo?: AppleSiliconServerInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   accountProjectInfo?: AccountProjectInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   baremetalServerInfo?: BaremetalServerInfo
   /**
    *
-   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo' could be set.
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
    */
   baremetalSettingInfo?: BaremetalSettingInfo
+  /**
+   *
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
+   */
+  ipamIpInfo?: IpamIpInfo
+  /**
+   *
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
+   */
+  loadBalancerLbInfo?: LoadBalancerLbInfo
+  /**
+   *
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
+   */
+  loadBalancerIpInfo?: LoadBalancerIpInfo
+  /**
+   *
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
+   */
+  loadBalancerFrontendInfo?: LoadBalancerFrontendInfo
+  /**
+   *
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
+   */
+  loadBalancerBackendInfo?: LoadBalancerBackendInfo
+  /**
+   *
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
+   */
+  loadBalancerRouteInfo?: LoadBalancerRouteInfo
+  /**
+   *
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
+   */
+  loadBalancerAclInfo?: LoadBalancerAclInfo
+  /**
+   *
+   * One-of ('info'): at most one of 'secmSecretInfo', 'secmSecretVersionInfo', 'kubeClusterInfo', 'kubePoolInfo', 'kubeNodeInfo', 'kubeAclInfo', 'keymKeyInfo', 'secretManagerSecretInfo', 'secretManagerVersionInfo', 'keyManagerKeyInfo', 'accountUserInfo', 'accountOrganizationInfo', 'instanceServerInfo', 'appleSiliconServerInfo', 'accountProjectInfo', 'baremetalServerInfo', 'baremetalSettingInfo', 'ipamIpInfo', 'loadBalancerLbInfo', 'loadBalancerIpInfo', 'loadBalancerFrontendInfo', 'loadBalancerBackendInfo', 'loadBalancerRouteInfo', 'loadBalancerAclInfo', 'loadBalancerCertificateInfo' could be set.
+   */
+  loadBalancerCertificateInfo?: LoadBalancerCertificateInfo
 }
 
-export interface ProductService {
-  name: string
-  methods: string[]
+export interface EventPrincipal {
+  id: string
+}
+
+export interface AuthenticationEvent {
+  /**
+   * ID of the event.
+   */
+  id: string
+  /**
+   * Timestamp of the event.
+   */
+  recordedAt?: Date
+  /**
+   * Organization ID containing the event.
+   */
+  organizationId: string
+  /**
+   * IP address at the origin of the event.
+   */
+  sourceIp: string
+  /**
+   * User Agent at the origin of the event.
+   */
+  userAgent?: string
+  /**
+   * Resources attached to the event.
+   */
+  resources: Resource[]
+  /**
+   * Result of the authentication attempt.
+   */
+  result: AuthenticationEventResult
+  /**
+   * (Optional) Reason for authentication failure.
+   */
+  failureReason?: AuthenticationEventFailureReason
+  /**
+   * (Optional) ISO 3166-1 alpha-2 country code of the source IP.
+   */
+  countryCode?: StdCountryCode
+  /**
+   * Authentication method used.
+   */
+  method: AuthenticationEventMethod
+  /**
+   * Origin of the authentication attempt.
+   */
+  origin: AuthenticationEventOrigin
+  /**
+   * (Optional) MFA type used for the authentication attempt.
+   */
+  mfaType?: AuthenticationEventMFAType
 }
 
 export interface Event {
@@ -211,15 +382,9 @@ export interface Event {
   /**
    * User or IAM application at the origin of the event.
    *
-   * One-of ('source'): at most one of 'principal', 'system' could be set.
+   * One-of ('source'): at most one of 'principal' could be set.
    */
   principal?: EventPrincipal
-  /**
-   * The Scaleway system that performed an action on behalf of the client.
-   *
-   * One-of ('source'): at most one of 'principal', 'system' could be set.
-   */
-  system?: EventSystem
   /**
    * Organization ID containing the event.
    */
@@ -266,6 +431,42 @@ export interface Event {
   statusCode: number
 }
 
+export interface SystemEvent {
+  id: string
+  recordedAt?: Date
+  locality: string
+  organizationId: string
+  projectId?: string
+  source: string
+  systemName: string
+  resources: Resource[]
+  kind: SystemEventKind
+  productName: string
+}
+
+export interface ProductService {
+  name: string
+  methods: string[]
+}
+
+export interface ListCombinedEventsResponseCombinedEvent {
+  /**
+   *
+   * One-of ('event'): at most one of 'api', 'auth', 'system' could be set.
+   */
+  api?: Event
+  /**
+   *
+   * One-of ('event'): at most one of 'api', 'auth', 'system' could be set.
+   */
+  auth?: AuthenticationEvent
+  /**
+   *
+   * One-of ('event'): at most one of 'api', 'auth', 'system' could be set.
+   */
+  system?: SystemEvent
+}
+
 export interface Product {
   /**
    * Product title.
@@ -279,6 +480,44 @@ export interface Product {
    * Specifies the API versions of the products integrated with Audit Trail. Each version defines the methods logged by Audit Trail.
    */
   services: ProductService[]
+}
+
+export type ListAuthenticationEventsRequest = {
+  /**
+   * Region to target. If none is passed will use default region from the config.
+   */
+  region?: ScwRegion
+  organizationId?: string
+  recordedAfter?: Date
+  recordedBefore?: Date
+  orderBy?: ListAuthenticationEventsRequestOrderBy
+  pageSize?: number
+  pageToken?: string
+}
+
+export interface ListAuthenticationEventsResponse {
+  events: AuthenticationEvent[]
+  nextPageToken?: string
+}
+
+export type ListCombinedEventsRequest = {
+  /**
+   * Region to target. If none is passed will use default region from the config.
+   */
+  region?: ScwRegion
+  organizationId?: string
+  projectId?: string
+  resourceType?: ResourceType
+  recordedAfter?: Date
+  recordedBefore?: Date
+  orderBy?: ListCombinedEventsRequestOrderBy
+  pageSize?: number
+  pageToken?: string
+}
+
+export interface ListCombinedEventsResponse {
+  events: ListCombinedEventsResponseCombinedEvent[]
+  nextPageToken?: string
 }
 
 export type ListEventsRequest = {
@@ -295,7 +534,7 @@ export type ListEventsRequest = {
    */
   organizationId?: string
   /**
-   * (Optional) Returns a paginated list of Scaleway resources' features.
+   * (Optional) Type of the Scaleway resource.
    */
   resourceType?: ResourceType
   /**
@@ -318,13 +557,25 @@ export type ListEventsRequest = {
   pageSize?: number
   pageToken?: string
   /**
-   * (Optional) Name of the Scaleway resource in a hyphenated format.
+   * (Optional) Name of the Scaleway product in a hyphenated format.
    */
   productName?: string
   /**
    * (Optional) Name of the service of the API call performed.
    */
   serviceName?: string
+  /**
+   * (Optional) ID of the Scaleway resource.
+   */
+  resourceId?: string
+  /**
+   * (Optional) ID of the User or IAM application at the origin of the event.
+   */
+  principalId?: string
+  /**
+   * (Optional) IP address at the origin of the event.
+   */
+  sourceIp?: string
 }
 
 export interface ListEventsResponse {

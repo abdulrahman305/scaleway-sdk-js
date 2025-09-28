@@ -162,6 +162,7 @@ const unmarshalPublicCatalogProductPropertiesAppleSilicon = (
 
   return {
     range: data.range,
+    serverType: data.server_type,
   } as PublicCatalogProductPropertiesAppleSilicon
 }
 
@@ -190,6 +191,7 @@ const unmarshalPublicCatalogProductPropertiesDedibox = (
   }
 
   return {
+    offerId: data.offer_id,
     range: data.range,
   } as PublicCatalogProductPropertiesDedibox
 }
@@ -204,6 +206,7 @@ const unmarshalPublicCatalogProductPropertiesElasticMetal = (
   }
 
   return {
+    offerId: data.offer_id,
     range: data.range,
   } as PublicCatalogProductPropertiesElasticMetal
 }
@@ -385,6 +388,7 @@ const unmarshalPublicCatalogProduct = (data: unknown): PublicCatalogProduct => {
       ? unmarshalPublicCatalogProductPrice(data.price)
       : undefined,
     product: data.product,
+    productCategory: data.product_category,
     properties: data.properties
       ? unmarshalPublicCatalogProductProperties(data.properties)
       : undefined,

@@ -79,7 +79,7 @@ export class API extends ParentAPI {
   })
 
   /**
-   * Create a key. Create a key in a given region specified by the `region` parameter. Keys only support symmetric encryption. You can use keys to encrypt or decrypt arbitrary payloads, or to generate data encryption keys. **Data encryption keys are not stored in Key Manager**.
+   * Create a key. Create a key in a given region specified by the `region` parameter. You can use keys to encrypt or decrypt arbitrary payloads, to sign and verify messages or to generate data encryption keys. **Data encryption keys are not stored in Key Manager**.
    *
    * @param request - The request {@link CreateKeyRequest}
    * @returns A Promise of Key
@@ -296,7 +296,7 @@ The data encryption key is returned in plaintext and ciphertext but it should on
     )
 
   /**
-   * Encrypt a payload. Encrypt a payload using an existing key, specified by the `key_id` parameter. Only keys with a usage set to `symmetric_encryption` are supported by this method. The maximum payload size that can be encrypted is 64 KB of plaintext.
+   * Encrypt a payload. Encrypt a payload using an existing key, specified by the `key_id` parameter. The maximum payload size that can be encrypted is 64 KB of plaintext.
    *
    * @param request - The request {@link EncryptRequest}
    * @returns A Promise of EncryptResponse

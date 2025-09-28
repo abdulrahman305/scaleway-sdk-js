@@ -108,10 +108,11 @@ export type TaskStatus = 'pending' | 'started' | 'success' | 'failure' | 'retry'
 export type VolumeServerState =
   | 'available'
   | 'snapshotting'
-  | 'fetching'
   | 'resizing'
+  | 'fetching'
   | 'saving'
   | 'hotsyncing'
+  | 'attaching'
   | 'error'
 
 export type VolumeServerVolumeType =
@@ -124,8 +125,9 @@ export type VolumeState =
   | 'available'
   | 'snapshotting'
   | 'fetching'
-  | 'resizing'
   | 'saving'
+  | 'attaching'
+  | 'resizing'
   | 'hotsyncing'
   | 'error'
 
@@ -333,6 +335,10 @@ export interface PrivateNIC {
    * Private NIC tags.
    */
   tags: string[]
+  /**
+   * Private NIC creation date.
+   */
+  creationDate?: Date
 }
 
 export interface SecurityGroupSummary {
@@ -2445,6 +2451,17 @@ export type PlanBlockMigrationRequest = {
    * One-of ('resource'): at most one of 'volumeId', 'snapshotId' could be set.
    */
   snapshotId?: string
+}
+
+export type ReleaseIpToIpamRequest = {
+  /**
+   * Zone to target. If none is passed will use default zone from the config.
+   */
+  zone?: ScwZone
+  /**
+   * ID of the IP you want to release from the Instance but retain in IPAM.
+   */
+  ipId: string
 }
 
 export type ServerActionRequest = {
