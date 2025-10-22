@@ -1812,6 +1812,20 @@ export interface OrganizationSecuritySettings {
    * Maximum duration a login session will stay active before needing to relogin.
    */
   maxLoginSessionDuration?: string
+  /**
+   * Maximum duration the `expires_at` field of an API key can represent. A value of 0 means there is no maximum duration.
+   */
+  maxApiKeyExpirationDuration?: string
+}
+
+export type ParseSamlMetadataRequest = {
+  file: Blob
+}
+
+export interface ParseSamlMetadataResponse {
+  singleSignOnUrl: string
+  entityId: string
+  signingCertificates: string[]
 }
 
 export type RemoveGroupMemberRequest = {
@@ -2006,6 +2020,10 @@ export type UpdateOrganizationSecuritySettingsRequest = {
    * Maximum duration a login session will stay active before needing to relogin.
    */
   maxLoginSessionDuration?: string
+  /**
+   * Maximum duration the `expires_at` field of an API key can represent. A value of 0 means there is no maximum duration.
+   */
+  maxApiKeyExpirationDuration?: string
 }
 
 export type UpdatePolicyRequest = {

@@ -1,13 +1,12 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
-
-import type { DefaultValues } from '@scaleway/sdk-client'
 import {
   isJSONObject,
   resolveOneOf,
   unmarshalArrayOfObject,
   unmarshalDate,
 } from '@scaleway/sdk-client'
+import type { DefaultValues } from '@scaleway/sdk-client'
 import type {
   AccountOrganizationInfo,
   AccountProjectInfo,
@@ -701,7 +700,7 @@ export const marshalCreateExportJobRequest = (
 ): Record<string, unknown> => ({
   name: request.name,
   organization_id: request.organizationId ?? defaults.defaultOrganizationId,
-  tags: request.tags !== undefined ? request.tags : undefined,
+  tags: request.tags,
   ...resolveOneOf([
     {
       param: 's3',

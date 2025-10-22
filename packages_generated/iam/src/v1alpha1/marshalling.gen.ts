@@ -1,18 +1,19 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
 import randomName from '@scaleway/random-name'
-import type { DefaultValues } from '@scaleway/sdk-client'
 import {
   isJSONObject,
+  marshalBlobToScwFile,
   resolveOneOf,
   unmarshalArrayOfObject,
   unmarshalDate,
 } from '@scaleway/sdk-client'
+import type { DefaultValues } from '@scaleway/sdk-client'
 import type {
+  APIKey,
   AddGroupMemberRequest,
   AddGroupMembersRequest,
   AddSamlCertificateRequest,
-  APIKey,
   Application,
   Connection,
   ConnectionConnectedOrganization,
@@ -30,8 +31,8 @@ import type {
   GracePeriod,
   Group,
   InitiateUserConnectionResponse,
-  JoinUserConnectionRequest,
   JWT,
+  JoinUserConnectionRequest,
   ListAPIKeysResponse,
   ListApplicationsResponse,
   ListGracePeriodsResponse,
@@ -42,13 +43,15 @@ import type {
   ListPoliciesResponse,
   ListQuotaResponse,
   ListRulesResponse,
-  ListSamlCertificatesResponse,
   ListSSHKeysResponse,
+  ListSamlCertificatesResponse,
   ListUsersResponse,
   Log,
   MFAOTP,
   Organization,
   OrganizationSecuritySettings,
+  ParseSamlMetadataRequest,
+  ParseSamlMetadataResponse,
   PermissionSet,
   Policy,
   Quotum,
@@ -57,6 +60,7 @@ import type {
   RemoveUserConnectionRequest,
   Rule,
   RuleSpecs,
+  SSHKey,
   Saml,
   SamlCertificate,
   SamlServiceProvider,
@@ -64,15 +68,14 @@ import type {
   SetOrganizationAliasRequest,
   SetRulesRequest,
   SetRulesResponse,
-  SSHKey,
   UpdateAPIKeyRequest,
   UpdateApplicationRequest,
   UpdateGroupRequest,
   UpdateOrganizationLoginMethodsRequest,
   UpdateOrganizationSecuritySettingsRequest,
   UpdatePolicyRequest,
-  UpdateSamlRequest,
   UpdateSSHKeyRequest,
+  UpdateSamlRequest,
   UpdateUserPasswordRequest,
   UpdateUserRequest,
   UpdateUserUsernameRequest,
@@ -699,8 +702,25 @@ export const unmarshalOrganizationSecuritySettings = (
     enforcePasswordRenewal: data.enforce_password_renewal,
     gracePeriodDuration: data.grace_period_duration,
     loginAttemptsBeforeLocked: data.login_attempts_before_locked,
+    maxApiKeyExpirationDuration: data.max_api_key_expiration_duration,
     maxLoginSessionDuration: data.max_login_session_duration,
   } as OrganizationSecuritySettings
+}
+
+export const unmarshalParseSamlMetadataResponse = (
+  data: unknown,
+): ParseSamlMetadataResponse => {
+  if (!isJSONObject(data)) {
+    throw new TypeError(
+      `Unmarshalling the type 'ParseSamlMetadataResponse' failed as data isn't a dictionary.`,
+    )
+  }
+
+  return {
+    entityId: data.entity_id,
+    signingCertificates: data.signing_certificates,
+    singleSignOnUrl: data.single_sign_on_url,
+  } as ParseSamlMetadataResponse
 }
 
 const unmarshalSamlServiceProvider = (data: unknown): SamlServiceProvider => {
@@ -908,6 +928,13 @@ export const marshalJoinUserConnectionRequest = (
   token: request.token,
 })
 
+export const marshalParseSamlMetadataRequest = async (
+  request: ParseSamlMetadataRequest,
+  defaults: DefaultValues,
+): Promise<Record<string, unknown>> => ({
+  file: await marshalBlobToScwFile(request.file),
+})
+
 export const marshalRemoveGroupMemberRequest = (
   request: RemoveGroupMemberRequest,
   defaults: DefaultValues,
@@ -991,6 +1018,7 @@ export const marshalUpdateOrganizationSecuritySettingsRequest = (
   enforce_password_renewal: request.enforcePasswordRenewal,
   grace_period_duration: request.gracePeriodDuration,
   login_attempts_before_locked: request.loginAttemptsBeforeLocked,
+  max_api_key_expiration_duration: request.maxApiKeyExpirationDuration,
   max_login_session_duration: request.maxLoginSessionDuration,
 })
 

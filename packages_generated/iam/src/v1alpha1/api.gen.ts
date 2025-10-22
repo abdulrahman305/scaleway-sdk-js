@@ -1,8 +1,8 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
 import {
-  enrichForPagination,
   API as ParentAPI,
+  enrichForPagination,
   resolveOneOf,
   urlParams,
   validatePathParam,
@@ -19,6 +19,7 @@ import {
   marshalCreateSSHKeyRequest,
   marshalCreateUserRequest,
   marshalJoinUserConnectionRequest,
+  marshalParseSamlMetadataRequest,
   marshalRemoveGroupMemberRequest,
   marshalRemoveUserConnectionRequest,
   marshalSetGroupMembersRequest,
@@ -30,8 +31,8 @@ import {
   marshalUpdateOrganizationLoginMethodsRequest,
   marshalUpdateOrganizationSecuritySettingsRequest,
   marshalUpdatePolicyRequest,
-  marshalUpdateSamlRequest,
   marshalUpdateSSHKeyRequest,
+  marshalUpdateSamlRequest,
   marshalUpdateUserPasswordRequest,
   marshalUpdateUserRequest,
   marshalUpdateUserUsernameRequest,
@@ -53,27 +54,28 @@ import {
   unmarshalListPoliciesResponse,
   unmarshalListQuotaResponse,
   unmarshalListRulesResponse,
-  unmarshalListSamlCertificatesResponse,
   unmarshalListSSHKeysResponse,
+  unmarshalListSamlCertificatesResponse,
   unmarshalListUsersResponse,
   unmarshalLog,
   unmarshalMFAOTP,
   unmarshalOrganization,
   unmarshalOrganizationSecuritySettings,
+  unmarshalParseSamlMetadataResponse,
   unmarshalPolicy,
   unmarshalQuotum,
+  unmarshalSSHKey,
   unmarshalSaml,
   unmarshalSamlCertificate,
   unmarshalSetRulesResponse,
-  unmarshalSSHKey,
   unmarshalUser,
   unmarshalValidateUserMFAOTPResponse,
 } from './marshalling.gen.js'
 import type {
+  APIKey,
   AddGroupMemberRequest,
   AddGroupMembersRequest,
   AddSamlCertificateRequest,
-  APIKey,
   Application,
   ClonePolicyRequest,
   CreateAPIKeyRequest,
@@ -89,9 +91,9 @@ import type {
   DeleteGroupRequest,
   DeleteJWTRequest,
   DeletePolicyRequest,
+  DeleteSSHKeyRequest,
   DeleteSamlCertificateRequest,
   DeleteSamlRequest,
-  DeleteSSHKeyRequest,
   DeleteUserMFAOTPRequest,
   DeleteUserRequest,
   EnableOrganizationSamlRequest,
@@ -113,8 +115,8 @@ import type {
   Group,
   InitiateUserConnectionRequest,
   InitiateUserConnectionResponse,
-  JoinUserConnectionRequest,
   JWT,
+  JoinUserConnectionRequest,
   ListAPIKeysRequest,
   ListAPIKeysResponse,
   ListApplicationsRequest,
@@ -135,10 +137,10 @@ import type {
   ListQuotaResponse,
   ListRulesRequest,
   ListRulesResponse,
-  ListSamlCertificatesRequest,
-  ListSamlCertificatesResponse,
   ListSSHKeysRequest,
   ListSSHKeysResponse,
+  ListSamlCertificatesRequest,
+  ListSamlCertificatesResponse,
   ListUsersRequest,
   ListUsersResponse,
   LockUserRequest,
@@ -146,17 +148,19 @@ import type {
   MFAOTP,
   Organization,
   OrganizationSecuritySettings,
+  ParseSamlMetadataRequest,
+  ParseSamlMetadataResponse,
   Policy,
   Quotum,
   RemoveGroupMemberRequest,
   RemoveUserConnectionRequest,
+  SSHKey,
   Saml,
   SamlCertificate,
   SetGroupMembersRequest,
   SetOrganizationAliasRequest,
   SetRulesRequest,
   SetRulesResponse,
-  SSHKey,
   UnlockUserRequest,
   UpdateAPIKeyRequest,
   UpdateApplicationRequest,
@@ -164,8 +168,8 @@ import type {
   UpdateOrganizationLoginMethodsRequest,
   UpdateOrganizationSecuritySettingsRequest,
   UpdatePolicyRequest,
-  UpdateSamlRequest,
   UpdateSSHKeyRequest,
+  UpdateSamlRequest,
   UpdateUserPasswordRequest,
   UpdateUserRequest,
   UpdateUserUsernameRequest,
@@ -1480,6 +1484,25 @@ export class API extends ParentAPI {
       method: 'DELETE',
       path: `/iam/v1alpha1/saml/${validatePathParam('samlId', request.samlId)}`,
     })
+
+  /**
+   * Parse SAML xml metadata file.
+   *
+   * @param request - The request {@link ParseSamlMetadataRequest}
+   * @returns A Promise of ParseSamlMetadataResponse
+   */
+  parseSamlMetadata = async (request: Readonly<ParseSamlMetadataRequest>) =>
+    this.client.fetch<ParseSamlMetadataResponse>(
+      {
+        body: JSON.stringify(
+          await marshalParseSamlMetadataRequest(request, this.client.settings),
+        ),
+        headers: jsonContentHeaders,
+        method: 'POST',
+        path: `/iam/v1alpha1/parse-saml-metadata`,
+      },
+      unmarshalParseSamlMetadataResponse,
+    )
 
   /**
    * List SAML certificates.

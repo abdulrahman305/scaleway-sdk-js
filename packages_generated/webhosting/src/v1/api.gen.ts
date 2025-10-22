@@ -1,15 +1,14 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
-
-import type { ApiLocality, WaitForOptions } from '@scaleway/sdk-client'
 import {
-  enrichForPagination,
   API as ParentAPI,
+  enrichForPagination,
   toApiLocality,
   urlParams,
   validatePathParam,
   waitForResource,
 } from '@scaleway/sdk-client'
+import type { ApiLocality, WaitForOptions } from '@scaleway/sdk-client'
 import {
   BACKUP_TRANSIENT_STATUSES as BACKUP_TRANSIENT_STATUSES_WEBHOSTING,
   DOMAIN_TRANSIENT_STATUSES as DOMAIN_TRANSIENT_STATUSES_WEBHOSTING,
@@ -47,15 +46,17 @@ import {
   unmarshalListBackupItemsResponse,
   unmarshalListBackupsResponse,
   unmarshalListControlPanelsResponse,
-  unmarshalListDatabasesResponse,
   unmarshalListDatabaseUsersResponse,
+  unmarshalListDatabasesResponse,
   unmarshalListFreeRootDomainsResponse,
   unmarshalListFtpAccountsResponse,
   unmarshalListHostingsResponse,
   unmarshalListMailAccountsResponse,
   unmarshalListOffersResponse,
+  unmarshalListRecentProgressesResponse,
   unmarshalListWebsitesResponse,
   unmarshalMailAccount,
+  unmarshalProgress,
   unmarshalResetHostingPasswordResponse,
   unmarshalResourceSummary,
   unmarshalRestoreBackupItemsResponse,
@@ -66,8 +67,10 @@ import {
 import type {
   Backup,
   BackupApiGetBackupRequest,
+  BackupApiGetProgressRequest,
   BackupApiListBackupItemsRequest,
   BackupApiListBackupsRequest,
+  BackupApiListRecentProgressesRequest,
   BackupApiRestoreBackupItemsRequest,
   BackupApiRestoreBackupRequest,
   CheckFreeDomainAvailabilityResponse,
@@ -82,8 +85,8 @@ import type {
   DatabaseApiDeleteDatabaseUserRequest,
   DatabaseApiGetDatabaseRequest,
   DatabaseApiGetDatabaseUserRequest,
-  DatabaseApiListDatabasesRequest,
   DatabaseApiListDatabaseUsersRequest,
+  DatabaseApiListDatabasesRequest,
   DatabaseApiUnassignDatabaseUserRequest,
   DatabaseUser,
   DnsApiCheckUserOwnsDomainRequest,
@@ -115,13 +118,14 @@ import type {
   ListBackupItemsResponse,
   ListBackupsResponse,
   ListControlPanelsResponse,
-  ListDatabasesResponse,
   ListDatabaseUsersResponse,
+  ListDatabasesResponse,
   ListFreeRootDomainsResponse,
   ListFtpAccountsResponse,
   ListHostingsResponse,
   ListMailAccountsResponse,
   ListOffersResponse,
+  ListRecentProgressesResponse,
   ListWebsitesResponse,
   MailAccount,
   MailAccountApiChangeMailAccountPasswordRequest,
@@ -129,6 +133,7 @@ import type {
   MailAccountApiListMailAccountsRequest,
   MailAccountApiRemoveMailAccountRequest,
   OfferApiListOffersRequest,
+  Progress,
   ResetHostingPasswordResponse,
   ResourceSummary,
   RestoreBackupItemsResponse,
@@ -276,6 +281,38 @@ export class BackupAPI extends ParentAPI {
         path: `/webhosting/v1/regions/${validatePathParam('region', request.region ?? this.client.settings.defaultRegion)}/hostings/${validatePathParam('hostingId', request.hostingId)}/restore-backup-items`,
       },
       unmarshalRestoreBackupItemsResponse,
+    )
+
+  /**
+   * Retrieve detailed information about a specific progress by its ID.. Retrieve detailed information about a specific progress by its ID.
+   *
+   * @param request - The request {@link BackupApiGetProgressRequest}
+   * @returns A Promise of Progress
+   */
+  getProgress = (request: Readonly<BackupApiGetProgressRequest>) =>
+    this.client.fetch<Progress>(
+      {
+        method: 'GET',
+        path: `/webhosting/v1/regions/${validatePathParam('region', request.region ?? this.client.settings.defaultRegion)}/hostings/${validatePathParam('hostingId', request.hostingId)}/progresses/${validatePathParam('progressId', request.progressId)}`,
+      },
+      unmarshalProgress,
+    )
+
+  /**
+   * List recent progresses associated with a specific backup, grouped by type.. List recent progresses associated with a specific backup, grouped by type.
+   *
+   * @param request - The request {@link BackupApiListRecentProgressesRequest}
+   * @returns A Promise of ListRecentProgressesResponse
+   */
+  listRecentProgresses = (
+    request: Readonly<BackupApiListRecentProgressesRequest>,
+  ) =>
+    this.client.fetch<ListRecentProgressesResponse>(
+      {
+        method: 'GET',
+        path: `/webhosting/v1/regions/${validatePathParam('region', request.region ?? this.client.settings.defaultRegion)}/hostings/${validatePathParam('hostingId', request.hostingId)}/progresses`,
+      },
+      unmarshalListRecentProgressesResponse,
     )
 }
 

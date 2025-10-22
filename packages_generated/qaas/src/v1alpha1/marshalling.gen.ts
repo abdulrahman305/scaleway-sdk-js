@@ -1,7 +1,5 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
-
-import type { DefaultValues } from '@scaleway/sdk-client'
 import {
   isJSONObject,
   resolveOneOf,
@@ -9,6 +7,7 @@ import {
   unmarshalDate,
   unmarshalMoney,
 } from '@scaleway/sdk-client'
+import type { DefaultValues } from '@scaleway/sdk-client'
 import type {
   Application,
   Booking,
@@ -26,8 +25,8 @@ import type {
   ListJobsResponse,
   ListModelsResponse,
   ListPlatformsResponse,
-  ListProcessesResponse,
   ListProcessResultsResponse,
+  ListProcessesResponse,
   ListSessionACLsResponse,
   ListSessionsResponse,
   Model,
@@ -87,6 +86,7 @@ export const unmarshalBooking = (data: unknown): Booking => {
     progressMessage: data.progress_message,
     startedAt: unmarshalDate(data.started_at),
     status: data.status,
+    timeZone: data.time_zone,
     updatedAt: unmarshalDate(data.updated_at),
   } as Booking
 }
@@ -499,6 +499,7 @@ const marshalCreateSessionRequestBookingDemand = (
   description: request.description,
   finished_at: request.finishedAt,
   started_at: request.startedAt,
+  time_zone: request.timeZone,
 })
 
 export const marshalCreateSessionRequest = (

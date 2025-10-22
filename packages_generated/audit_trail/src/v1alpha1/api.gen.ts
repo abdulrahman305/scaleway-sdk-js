@@ -1,14 +1,13 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
-
-import type { ApiLocality } from '@scaleway/sdk-client'
 import {
-  enrichForPagination,
   API as ParentAPI,
+  enrichForPagination,
   toApiLocality,
   urlParams,
   validatePathParam,
 } from '@scaleway/sdk-client'
+import type { ApiLocality } from '@scaleway/sdk-client'
 import {
   marshalCreateExportJobRequest,
   unmarshalExportJob,
@@ -218,14 +217,7 @@ export class API extends ParentAPI {
             'page_size',
             request.pageSize ?? this.client.settings.defaultPageSize,
           ],
-          [
-            'tags',
-            request.tags
-              ? Object.entries(request.tags).map(
-                  ([key, value]) => `${key}:${value}`,
-                )
-              : undefined,
-          ],
+          ['tags', request.tags],
         ),
       },
       unmarshalListExportJobsResponse,
