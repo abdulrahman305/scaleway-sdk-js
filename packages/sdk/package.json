@@ -1,6 +1,6 @@
 {
   "name": "@scaleway/sdk",
-  "version": "2.77.0",
+  "version": "2.78.0",
   "description": "Scaleway SDK TS.",
   "license": "Apache-2.0",
   "files": [
@@ -57,6 +57,7 @@
     "@scaleway/sdk-ipam": "workspace:*",
     "@scaleway/sdk-jobs": "workspace:*",
     "@scaleway/sdk-k8s": "workspace:*",
+    "@scaleway/sdk-kafka": "workspace:*",
     "@scaleway/sdk-key-manager": "workspace:*",
     "@scaleway/sdk-lb": "workspace:*",
     "@scaleway/sdk-marketplace": "workspace:*",

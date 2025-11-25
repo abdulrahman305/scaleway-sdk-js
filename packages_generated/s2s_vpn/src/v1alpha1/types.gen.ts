@@ -1,8 +1,13 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
-import type { Region as ScwRegion, Zone as ScwZone } from '@scaleway/sdk-client'
+import type { Region as ScwRegion, Zone as ScwZone} from '@scaleway/sdk-client'
 
-export type BgpSessionStatus = 'unknown_status' | 'up' | 'down' | 'disabled'
+
+export type BgpSessionStatus =
+  | 'unknown_status'
+  | 'up'
+  | 'down'
+  | 'disabled'
 
 export type ConnectionDhGroup =
   | 'unknown_dhgroup'
@@ -79,7 +84,10 @@ export type ListVpnGatewaysRequestOrderBy =
   | 'status_asc'
   | 'status_desc'
 
-export type TunnelStatus = 'unknown_tunnel_status' | 'up' | 'down'
+export type TunnelStatus =
+  | 'unknown_tunnel_status'
+  | 'up'
+  | 'down'
 
 export type VpnGatewayStatus =
   | 'unknown_status'
@@ -96,24 +104,30 @@ export interface BgpSession {
   peerPrivateIp: string
 }
 
+
 export interface ConnectionCipher {
   encryption: ConnectionEncryption
   integrity?: ConnectionIntegrity
   dhGroup?: ConnectionDhGroup
 }
 
-export interface VpnGatewayPrivateConfig {}
+
+export interface VpnGatewayPrivateConfig {
+}
+
 
 export interface VpnGatewayPublicConfig {
   ipamIpv4Id?: string
   ipamIpv6Id?: string
 }
 
+
 export interface CreateConnectionRequestBgpConfig {
   routingPolicyId: string
   privateIp?: string
   peerPrivateIp?: string
 }
+
 
 export interface Connection {
   /**
@@ -156,6 +170,14 @@ export interface Connection {
    * Who initiates the IPsec tunnel.
    */
   initiationPolicy: ConnectionInitiationPolicy
+  /**
+   * ID of the secret in Secret Manager which contains the PSK.
+   */
+  secretId: string
+  /**
+   * Version number of the secret in Secret Manager which contains the PSK.
+   */
+  secretRevision: number
   /**
    * List of IKE v2 ciphers proposed for the IPsec tunnel.
    */
@@ -210,10 +232,12 @@ export interface Connection {
   region: ScwRegion
 }
 
+
 export interface CreateVpnGatewayRequestPublicConfig {
   ipamIpv4Id?: string
   ipamIpv6Id?: string
 }
+
 
 export interface CustomerGateway {
   /**
@@ -257,6 +281,7 @@ export interface CustomerGateway {
    */
   asn: number
 }
+
 
 export interface RoutingPolicy {
   /**
@@ -305,6 +330,7 @@ export interface RoutingPolicy {
   region: ScwRegion
 }
 
+
 export interface GatewayType {
   name: string
   bandwidth: number
@@ -314,6 +340,7 @@ export interface GatewayType {
    */
   region: ScwRegion
 }
+
 
 export interface VpnGateway {
   /**
@@ -389,6 +416,7 @@ export interface VpnGateway {
   region: ScwRegion
 }
 
+
 export type CreateConnectionRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -444,16 +472,18 @@ export type CreateConnectionRequest = {
   bgpConfigIpv6?: CreateConnectionRequestBgpConfig
 }
 
+
 export interface CreateConnectionResponse {
   /**
    * This connection.
    */
   connection?: Connection
   /**
-   * New PSK generated for this connection.
+   * @deprecated Deprecated, use secret_id & secret_revision fields.
    */
-  preSharedKey: string
+  preSharedKey?: string
 }
+
 
 export type CreateCustomerGatewayRequest = {
   /**
@@ -486,6 +516,7 @@ export type CreateCustomerGatewayRequest = {
   asn: number
 }
 
+
 export type CreateRoutingPolicyRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -516,6 +547,7 @@ export type CreateRoutingPolicyRequest = {
    */
   prefixFilterOut?: string[]
 }
+
 
 export type CreateVpnGatewayRequest = {
   /**
@@ -562,6 +594,7 @@ export type CreateVpnGatewayRequest = {
   zone?: ScwZone
 }
 
+
 export type DeleteConnectionRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -572,6 +605,7 @@ export type DeleteConnectionRequest = {
    */
   connectionId: string
 }
+
 
 export type DeleteCustomerGatewayRequest = {
   /**
@@ -584,6 +618,7 @@ export type DeleteCustomerGatewayRequest = {
   gatewayId: string
 }
 
+
 export type DeleteRoutingPolicyRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -595,6 +630,7 @@ export type DeleteRoutingPolicyRequest = {
   routingPolicyId: string
 }
 
+
 export type DeleteVpnGatewayRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -605,6 +641,7 @@ export type DeleteVpnGatewayRequest = {
    */
   gatewayId: string
 }
+
 
 export type DetachRoutingPolicyRequest = {
   /**
@@ -629,6 +666,7 @@ export type DetachRoutingPolicyRequest = {
   routingPolicyV6?: string
 }
 
+
 export type DisableRoutePropagationRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -639,6 +677,7 @@ export type DisableRoutePropagationRequest = {
    */
   connectionId: string
 }
+
 
 export type EnableRoutePropagationRequest = {
   /**
@@ -651,6 +690,7 @@ export type EnableRoutePropagationRequest = {
   connectionId: string
 }
 
+
 export type GetConnectionRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -661,6 +701,7 @@ export type GetConnectionRequest = {
    */
   connectionId: string
 }
+
 
 export type GetCustomerGatewayRequest = {
   /**
@@ -673,6 +714,7 @@ export type GetCustomerGatewayRequest = {
   gatewayId: string
 }
 
+
 export type GetRoutingPolicyRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -684,6 +726,7 @@ export type GetRoutingPolicyRequest = {
   routingPolicyId: string
 }
 
+
 export type GetVpnGatewayRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -694,6 +737,7 @@ export type GetVpnGatewayRequest = {
    */
   gatewayId: string
 }
+
 
 export type ListConnectionsRequest = {
   /**
@@ -750,6 +794,7 @@ export type ListConnectionsRequest = {
   customerGatewayIds?: string[]
 }
 
+
 export interface ListConnectionsResponse {
   /**
    * List of connections on the current page.
@@ -760,6 +805,7 @@ export interface ListConnectionsResponse {
    */
   totalCount: number
 }
+
 
 export type ListCustomerGatewaysRequest = {
   /**
@@ -792,6 +838,7 @@ export type ListCustomerGatewaysRequest = {
   tags?: string[]
 }
 
+
 export interface ListCustomerGatewaysResponse {
   /**
    * List of customer gateways on the current page.
@@ -802,6 +849,7 @@ export interface ListCustomerGatewaysResponse {
    */
   totalCount: number
 }
+
 
 export type ListRoutingPoliciesRequest = {
   /**
@@ -838,10 +886,12 @@ export type ListRoutingPoliciesRequest = {
   ipv6?: boolean
 }
 
+
 export interface ListRoutingPoliciesResponse {
   routingPolicies: RoutingPolicy[]
   totalCount: number
 }
+
 
 export type ListVpnGatewayTypesRequest = {
   /**
@@ -858,6 +908,7 @@ export type ListVpnGatewayTypesRequest = {
   pageSize?: number
 }
 
+
 export interface ListVpnGatewayTypesResponse {
   /**
    * List of VPN gateway types on the current page.
@@ -868,6 +919,7 @@ export interface ListVpnGatewayTypesResponse {
    */
   totalCount: number
 }
+
 
 export type ListVpnGatewaysRequest = {
   /**
@@ -912,6 +964,7 @@ export type ListVpnGatewaysRequest = {
   privateNetworkIds?: string[]
 }
 
+
 export interface ListVpnGatewaysResponse {
   /**
    * List of VPN gateways on the current page.
@@ -922,6 +975,7 @@ export interface ListVpnGatewaysResponse {
    */
   totalCount: number
 }
+
 
 export type RenewConnectionPskRequest = {
   /**
@@ -934,16 +988,18 @@ export type RenewConnectionPskRequest = {
   connectionId: string
 }
 
+
 export interface RenewConnectionPskResponse {
   /**
    * This connection.
    */
   connection?: Connection
   /**
-   * New PSK generated for this connection.
+   * @deprecated Deprecated, use secret_id & secret_revision fields.
    */
-  preSharedKey: string
+  preSharedKey?: string
 }
+
 
 export type SetRoutingPolicyRequest = {
   /**
@@ -967,6 +1023,7 @@ export type SetRoutingPolicyRequest = {
    */
   routingPolicyV6?: string
 }
+
 
 export type UpdateConnectionRequest = {
   /**
@@ -999,6 +1056,7 @@ export type UpdateConnectionRequest = {
   espCiphers?: ConnectionCipher[]
 }
 
+
 export type UpdateCustomerGatewayRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -1030,6 +1088,7 @@ export type UpdateCustomerGatewayRequest = {
   asn?: number
 }
 
+
 export type UpdateRoutingPolicyRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -1057,6 +1116,7 @@ export type UpdateRoutingPolicyRequest = {
   prefixFilterOut?: string[]
 }
 
+
 export type UpdateVpnGatewayRequest = {
   /**
    * Region to target. If none is passed will use default region from the config.
@@ -1075,3 +1135,5 @@ export type UpdateVpnGatewayRequest = {
    */
   tags?: string[]
 }
+
+

@@ -16,8 +16,7 @@ format-check:
 
 format-generated:
 	pnpm install
-	pnpm eslint --config eslint.config.generated.mjs --fix 'packages_generated/**/*.ts'
-	pnpm biome format --write packages_generated/
+	pnpm biome lint --write --unsafe --config-path scripts/templates/biome.generated.json --only correctness/noUnusedImports --only correctness/noUnusedVariables packages_generated/
 
 typing:
 	pnpm run typecheck
@@ -26,7 +25,7 @@ lint:
 	pnpm run lint
 
 test:
-	pnpm turbo test
+	pnpm run test
 
 test-coverage:
 	pnpm run test:coverage
@@ -45,6 +44,9 @@ generate-packages:
 
 generate-global-sdk-package:
 	pnpm run generateGlobalSdkPackage
+
+setup-new-products:
+	pnpm run setupNewProducts
 
 publish: install-dependencies
 	pnpm run build

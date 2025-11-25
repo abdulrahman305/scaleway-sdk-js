@@ -1,6 +1,8 @@
 // This file was automatically generated. DO NOT EDIT.
 // If you have any remark or suggestion do not hesitate to open an issue.
-export { API } from './api.gen.js'
+export {
+  API,
+} from './api.gen.js'
 export * from './marshalling.gen.js'
 export type {
   APIKey,
@@ -19,6 +21,8 @@ export type {
   CreateJWTRequest,
   CreatePolicyRequest,
   CreateSSHKeyRequest,
+  CreateScimTokenRequest,
+  CreateScimTokenResponse,
   CreateUserMFAOTPRequest,
   CreateUserRequest,
   CreateUserRequestMember,
@@ -30,9 +34,12 @@ export type {
   DeleteSSHKeyRequest,
   DeleteSamlCertificateRequest,
   DeleteSamlRequest,
+  DeleteScimRequest,
+  DeleteScimTokenRequest,
   DeleteUserMFAOTPRequest,
   DeleteUserRequest,
   EnableOrganizationSamlRequest,
+  EnableOrganizationScimRequest,
   EncodedJWT,
   GetAPIKeyRequest,
   GetApplicationRequest,
@@ -88,6 +95,9 @@ export type {
   ListSSHKeysResponse,
   ListSamlCertificatesRequest,
   ListSamlCertificatesResponse,
+  ListScimTokensRequest,
+  ListScimTokensRequestOrderBy,
+  ListScimTokensResponse,
   ListUsersRequest,
   ListUsersRequestOrderBy,
   ListUsersResponse,
@@ -117,6 +127,8 @@ export type {
   SamlCertificateType,
   SamlServiceProvider,
   SamlStatus,
+  Scim,
+  ScimToken,
   SetGroupMembersRequest,
   SetOrganizationAliasRequest,
   SetRulesRequest,
