@@ -240,6 +240,7 @@ const unmarshalContactExtensionIT = (data: unknown): ContactExtensionIT => {
 
 	return {
 		europeanCitizenship: data.european_citizenship,
+		pin: data.pin,
 		taxCode: data.tax_code,
 	} as ContactExtensionIT
 }
@@ -1649,6 +1650,7 @@ const marshalContactExtensionIT = (
 	defaults: DefaultValues,
 ): Record<string, unknown> => ({
 	european_citizenship: request.europeanCitizenship,
+	pin: request.pin,
 	tax_code: request.taxCode,
 })
 

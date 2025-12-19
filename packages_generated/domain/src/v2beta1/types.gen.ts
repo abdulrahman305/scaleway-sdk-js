@@ -377,8 +377,15 @@ export interface ContactExtensionFR {
 }
 
 export interface ContactExtensionIT {
-	europeanCitizenship: string
-	taxCode: string
+	/**
+	 * @deprecated
+	 */
+	europeanCitizenship?: string
+	/**
+	 * @deprecated
+	 */
+	taxCode?: string
+	pin: string
 }
 
 export interface ContactExtensionNL {
