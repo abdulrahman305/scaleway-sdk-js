@@ -16,7 +16,8 @@
     "indentWidth": 2,
     "lineEnding": "lf",
     "lineWidth": 80,
-    "attributePosition": "auto"
+    "attributePosition": "auto",
+    "includes": ["**", "!**/*.gen.ts", "!packages_generated/**/*.ts", "!packages_generated/**/*.json", "!packages_generated/**/*.config.ts", "!packages/sdk/src/index.gen.ts"]
   },
   "javascript": {
     "formatter": {
@@ -53,7 +54,7 @@
   },
   "overrides": [
     {
-      "includes": ["packages_generated/**", "**/dist/**", "coverage/**", "**/examples/**", "**/*.gen.ts", "scripts/templates/**", "packages/sdk/src/index.gen.ts"],
+      "includes": ["**/dist/**", "coverage/**", "**/examples/**", "**/*.gen.ts", "scripts/templates/**", "packages/sdk/src/index.gen.ts"],
       "formatter": {
         "enabled": false
       },
@@ -62,7 +63,7 @@
       }
     },
     {
-      "includes": ["vite.config.ts", "vitest.config.ts", "packages/**/*.config.ts", "packages/**/*.config.js"],
+      "includes": ["vite.config.ts", "vitest.config.ts", "packages/**/*.config.ts", "packages/**/*.config.js", "packages_generated/**/*.config.ts"],
       "linter": {
         "rules": {
           "style": {
