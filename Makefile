@@ -16,9 +16,8 @@ format-check:
 
 format-generated:
 	pnpm install
-	pnpm biome format --write --config-path scripts/templates/biome.generated.json packages_generated/
-	pnpm biome lint --write --unsafe --config-path scripts/templates/biome.generated.json --only correctness/noUnusedImports --only correctness/noUnusedVariables packages_generated/
-	pnpm dlx tsx ./scripts/validateGeneratedExports.ts
+	pnpm biome format --write packages_generated/
+	pnpm biome check --write --unsafe packages_generated/
 
 typing:
 	pnpm run typecheck

@@ -17,7 +17,7 @@
     "lineEnding": "lf",
     "lineWidth": 80,
     "attributePosition": "auto",
-    "includes": ["**", "!**/*.gen.ts", "!packages_generated/**/*.ts", "!packages_generated/**/*.json", "!packages_generated/**/*.config.ts", "!packages/sdk/src/index.gen.ts"]
+    "includes": ["**", "!packages/**/*.gen.ts", "!scripts/**/*.gen.ts", "!packages/sdk/src/index.gen.ts"]
   },
   "javascript": {
     "formatter": {
@@ -54,7 +54,23 @@
   },
   "overrides": [
     {
-      "includes": ["**/dist/**", "coverage/**", "**/examples/**", "**/*.gen.ts", "scripts/templates/**", "packages/sdk/src/index.gen.ts"],
+      "includes": ["packages_generated/**/*.gen.ts"],
+      "formatter": {
+        "enabled": true
+      },
+      "linter": {
+        "enabled": true,
+        "rules": {
+          "recommended": false,
+          "correctness": {
+            "noUnusedVariables": "error",
+            "noUnusedImports": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/dist/**", "coverage/**", "**/examples/**", "packages/**/*.gen.ts", "scripts/**/*.gen.ts", "scripts/templates/**", "packages/sdk/src/index.gen.ts"],
       "formatter": {
         "enabled": false
       },
@@ -91,6 +107,39 @@
         "rules": {
           "style": {
             "useShorthandFunctionType": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["packages_generated/**"],
+      "json": {
+        "formatter": {
+          "enabled": true
+        }
+      },
+      "linter": {
+        "rules": {
+          "recommended": false,
+          "correctness": {
+            "noUnusedVariables": "error",
+            "noUnusedImports": "error"
+          },
+          "style": {
+            "useNamingConvention": "off",
+            "noDefaultExport": "off"
+          },
+          "suspicious": {
+            "noShadowRestrictedNames": "off",
+            "noEmptyInterface": "off"
+          },
+          "performance": {
+            "noAccumulatingSpread": "off"
+          },
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off",
+            "noStaticOnlyClass": "off",
+            "noBannedTypes": "off"
           }
         }
       }
